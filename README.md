@@ -1,4 +1,4 @@
-# Towards Privacy-Preserving Intrusion Detection in IoV
+# 面向隐私保护的车联网入侵检测 代码文档
 
 本仓库是论文 **Towards Privacy-Preserving Intrusion Detection in IoV: a Federated Learning Approach with Adaptive Differential Privacy and Dynamic Aggregation** 的实验代码。
 
@@ -102,8 +102,7 @@ python main.py [选项]
 
 - PUC 仅在 FedDFW 分支中生效。`fedavg --puc 1` 不会启用 PUC，FedAvg 示例统一设置 `--puc 0`。
 - AdaCliP 必须同时设置 `--use_dp 1`，单独设置 `--use_sparse_adaclip 1` 不会进入该训练分支。
-- 参数名使用普通下划线，例如 `--local_model`，不需要写成 `--local\_model`。
-- 以下命令用于说明配置与消融组合，不代表论文所有实验的最终超参数或已复现结果。
+- 以下命令用于说明配置与消融组合，不代表论文所有实验的最终超参数。
 
 ### 4.2 命令行参数
 
