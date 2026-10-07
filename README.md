@@ -1,23 +1,17 @@
-# FedDFW 代码文档
+# Towards Privacy-Preserving Intrusion Detection in IoV
 
 本仓库是论文 **Towards Privacy-Preserving Intrusion Detection in IoV: a Federated Learning Approach with Adaptive Differential Privacy and Dynamic Aggregation** 的实验代码。
 
 本项目面向车联网入侵检测，支持多客户端联邦训练及以下实验组件：
 
 1. **动态聚合**：使用 FedDFW 调整客户端聚合权重。
-2. **参数更新一致性筛选（PUC）**：根据历史更新方向筛选参数更新。
-3. **差分隐私训练**：采用固定阈值裁剪，或启用 AdaCliP 稀疏自适应裁剪分支。
+2. **参数更新一致性筛选（PUC）**：根据参数更新方向筛选参数更新。
+3. **差分隐私训练**：采用固定阈值裁剪，或启用 AdaCliP 自适应裁剪。
 
 同时提供 FedAvg、FedDisco 和 FedProx 基线配置，方便开展对比实验。
 
 
-**训练流程：**
 
-1. 加载数据集并划分训练与测试数据，按 IID 或 Dirichlet Non-IID 配置划分客户端。
-2. 初始化服务端和客户端模型；启用 AdaCliP 时执行重要性预热。
-3. 每轮同步全局参数，执行客户端本地训练及可选的 PUC、DP 处理。
-4. 根据 FedAvg、FedDisco 或 FedDFW 配置聚合客户端模型；FedProx 在本地训练阶段生效。
-5. 评估模型并记录训练损失、准确率和分类指标。
 
 ---
 
@@ -68,11 +62,21 @@ FL/
 python main.py --dataset CIC-IoV2024 --local_model CNN --server_method fedavg --T 3 --E 1 --device cuda --puc 0 --random_seed 1 --iid 0 --dirichlet_alpha 0.5 --node_num 20 --use_dp 0 --use_sparse_adaclip 0
 ```
 
-此命令只减少通信轮数，仍加载完整数据，不是数据子集测试。
+此命令只减少通信轮数，仍加载完整数据。
 
 ---
 
 ## 4. 联邦学习
+
+
+**训练流程：**
+
+1. 加载数据集并划分训练与测试数据，按 IID 或 Dirichlet Non-IID 配置划分客户端。
+2. 初始化服务端和客户端模型；启用 AdaCliP 时执行重要性预热。
+3. 每轮同步全局参数，执行客户端本地训练及可选的 PUC、DP 处理。
+4. 根据 FedAvg、FedDisco 或 FedDFW 配置聚合客户端模型；FedProx 在本地训练阶段生效。
+5. 评估模型并记录训练损失、准确率和分类指标。
+
 
 入口：`main.py`。
 
@@ -189,7 +193,7 @@ python main.py --dataset CIC-IoV2024 --local_model CNN --server_method feddfw --
 | `--dp_epsilon_limit` | float | `10.0` | 隐私报告使用的预算参考上限 |
 | `--use_sparse_adaclip` | int | `0` | 是否使用 AdaCliP |
 | `--topk_ratio` | float | `0.6` | 初始掩码及梯度 Top-k 保留比例 |
-| `--use_mask_release` | int | `1` | 是否逐轮释放初始屏蔽参数 |
+| `--use_mask_release` | int | `0` | 是否逐轮释放初始屏蔽参数 |
 | `--release_ratio` | float | `0.2` | 每轮释放剩余初始屏蔽参数的比例 |
 
 ### 5.2 常用示例
@@ -239,32 +243,10 @@ python main.py --dataset CIC-IoV2024 --local_model CNN --server_method feddfw --
 - 上述 AdaClip 示例保留 `--use_mask_release 0`，即关闭逐轮掩码释放；此时 `--release_ratio` 不参与释放调度。需要逐轮释放时，改为 `--use_mask_release 1`。
 - DP 需要计算逐样本梯度，训练速度和内存开销与普通训练不同。
 
-> 注意：当前 `dp_epsilon_limit` 不会触发自动停止训练。AdaCliP 的预热未纳入当前隐私会计，自适应统计量还使用未加噪的恢复梯度；当前 epsilon 报告不能直接作为整个流程经过验证的端到端隐私保证。
-
 ---
 
 
 
-
-## 7. 代码结构
-
-```text
-FedDFW/
-|-- main.py                 # 训练入口
-|-- args.py                 # 命令行参数
-|-- datasets.py             # 数据读取、预处理与客户端划分
-|-- nodes.py                # 节点、模型和优化器初始化
-|-- client_funct.py         # 本地训练、PUC、DP、AdaCliP 
-|-- server_funct.py         # FedAvg 与 FedDFW 服务端聚合
-|-- utils.py                # 模型构建、评估
-|-- distributed_utils.py    # RPC 客户端辅助函数
-|-- distributed_main.py     # 分布式相关入口
-|-- comm_monitor.py         # 网络流量监测
-|-- models_dict/            # 模型定义
-`-- requirements.txt        # 项目依赖清单
-```
-
----
 
 
 ## 注意事项
