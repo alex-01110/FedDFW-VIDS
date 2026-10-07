@@ -1,0 +1,13 @@
+torch
+torchvision
+numpy
+scipy
+pandas
+scikit-learn
+einops
+seaborn
+matplotlib
+six
+backpack-for-pytorch
+opacus
+psutil
