@@ -251,4 +251,4 @@ python main.py --dataset CIC-IoV2024 --local_model CNN --server_method feddfw --
 ## 注意事项
 
 - 实验命令展示不同方法的配置，不代表所有论文实验的最终超参数或已复现结果。
-- 数据集名称区分大小写，请使用 `CIC-IoV2024`，不要使用帮助文本中出现的简写 `IOV2024`。
+- 数据集名称区分大小写，例如 `CIC-IoV2024`。
