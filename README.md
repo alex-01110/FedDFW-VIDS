@@ -1,6 +1,9 @@
+# Privacy-Preserving Intrusion Detection in IoV
+
+---
+
 **English** | [简体中文](README.zh-CN.md)
 
-# Privacy-Preserving Intrusion Detection in IoV
 
 This repository contains the experimental code for **Towards Privacy-Preserving Intrusion Detection in IoV: a Federated Learning Approach with Adaptive Differential Privacy and Dynamic Aggregation**.
 
