@@ -34,7 +34,14 @@ DP 和 AdaCliP 分支需要 `backpack-for-pytorch` 计算逐样本梯度。`opac
 
 ## 2. 数据集说明
 
-本项目适用于多种车联网入侵检测数据集，请自行准备数据集并进行数据清洗与特征选择。当前数据路径定义在 `datasets.py` 中，相对于**运行命令时的工作目录**解析，请从 `FedDFW` 仓库根目录启动训练。
+
+
+由于github文件上传限制，数据集无法上传，需要用户自行下载所需数据集：
+ - **CIC-IoV2024**：https://www.unb.ca/cic/datasets/iov-dataset-2024.html
+ - **CIC-IDS2017**：https://www.unb.ca/cic/datasets/ids-2017.html
+ - **NSL-KDD**：https://web.archive.org/web/20150205070216/http://nsl.cs.unb.ca/NSL-KDD
+
+ 本项目适用于多种车联网入侵检测数据集，请自行准备数据集并进行数据清洗与特征选择。当前数据路径定义在 `datasets.py` 中，相对于**运行命令时的工作目录**解析，请从 `FedDFW` 仓库根目录启动训练。
 
 
 以下示例使用 `CIC-IoV2024`：

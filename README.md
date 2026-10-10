@@ -30,7 +30,14 @@ The DP and AdaCliP branches require `backpack-for-pytorch` to compute per-sample
 
 ## 2. Datasets
 
+Due to GitHub's file size limitations, the datasets cannot be uploaded to this repository. Users must download the required datasets themselves:
+- **CIC-IoV2024**: https://www.unb.ca/cic/datasets/iov-dataset-2024.html
+- **CIC-IDS2017**: https://www.unb.ca/cic/datasets/ids-2017.html
+- **NSL-KDD**: https://web.archive.org/web/20150205070216/http://nsl.cs.unb.ca/NSL-KDD
+
 The project supports multiple IoV intrusion detection datasets. Prepare the datasets and perform data cleaning and feature selection yourself. Dataset paths are currently defined in `datasets.py` and resolved relative to the **working directory from which the command is run**. Start training from the `FedDFW` repository root.
+
+
 
 The examples below use `CIC-IoV2024`:
 
